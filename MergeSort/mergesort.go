@@ -2,18 +2,22 @@ package main
 
 import "fmt"
 
-func MergeSort(arr []int) []int {
+func mergesort(arr []int, c chan []int) {
 	if len(arr) < 2 {
-		return arr
+		c <- arr
+		return
 	}
 	mid := len(arr) / 2
-	left := MergeSort(arr[:mid])
-	right := MergeSort(arr[mid:])
-
-	return Merge(left, right)
+	leftChan := make(chan []int)
+	rightChan := make(chan []int)
+	go mergesort(arr[:mid], leftChan)
+	go mergesort(arr[mid:], rightChan)
+	left := <-leftChan
+	right := <-rightChan
+	c <- merge(left, right)
 }
 
-func Merge(left, right []int) []int {
+func merge(left, right []int) []int {
 	result := make([]int, len(left)+len(right))
 	l, r := 0, 0
 	for k := 0; k < len(result); k++ {
@@ -31,14 +35,14 @@ func Merge(left, right []int) []int {
 			r++
 		}
 	}
-
 	return result
 }
 
 func main() {
-	arr := []int{38, 27, 43, 3, 9, 82, 10}
-	fmt.Println("unsorted array : ", arr)
-
-	sortedArr := MergeSort(arr)
-	fmt.Println("sortedArray : ", sortedArr)
+	arr := []int{37, 12, 25, 8, 19, 45, 3, 29, 15}
+	fmt.Println("Unsorted array : ", arr)
+	c := make(chan []int)
+	go mergesort(arr, c)
+	sorted := <-c
+	fmt.Println("Sorted array : ", sorted)
 }
