@@ -28,12 +28,12 @@ func main() {
 		fmt.Println()
 	}
 
-	sum := 0
-	for i := 0; i < r; i++ {
-		for j := 0; j < c; j++ {
-			sum += matrix[i][j]
+	for i := 0; i < c; i++ {
+		sum := 0
+		for j := 0; j < r; j++ {
+			sum += matrix[j][i]
 		}
-		fmt.Printf("Sum of row %d is : %d\n", i+1, sum)
+		fmt.Printf("Sum of columns %d is : %d\n", i+1, sum)
 		sum = 0
 	}
 }
