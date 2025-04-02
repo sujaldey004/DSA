@@ -31,6 +31,16 @@ func PreOrderTraversal(root *Node) {
 	PreOrderTraversal(root.right)
 }
 
+func PostOrderTraversal(root *Node) {
+	if root == nil {
+		return
+	}
+
+	PostOrderTraversal(root.left)
+	PostOrderTraversal(root.right)
+	fmt.Print(root.data, " ")
+}
+
 func InOrderTraversal(root *Node) {
 	if root == nil {
 		return
@@ -47,4 +57,6 @@ func main() {
 	PreOrderTraversal(root)
 	fmt.Println()
 	InOrderTraversal(root)
+	fmt.Println()
+	PostOrderTraversal(root)
 }
