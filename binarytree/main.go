@@ -21,10 +21,19 @@ func buildTree(preorder []int) *Node {
 	return root
 }
 
+func PreOrderTraversal(root *Node) {
+	if root == nil {
+		return
+	}
+
+	fmt.Print(root.data)
+	fmt.Print(" ")
+	PreOrderTraversal(root.left)
+	PreOrderTraversal(root.right)
+}
+
 func main() {
 	preorder := []int{1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1}
 	root := buildTree(preorder)
-	fmt.Println(root.data)
-	fmt.Println(root.left.data)
-	fmt.Println(root.right.data)
+	PreOrderTraversal(root)
 }
