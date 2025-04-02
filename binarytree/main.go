@@ -51,6 +51,22 @@ func InOrderTraversal(root *Node) {
 	InOrderTraversal(root.right)
 }
 
+func LevelOrderTraversal(root *Node) {
+	queue := []*Node{root}
+	for len(queue) > 0 {
+		curr := queue[0]
+		queue = queue[1:]
+		fmt.Print(curr.data, " ")
+
+		if curr.left != nil {
+			queue = append(queue, curr.left)
+		}
+		if curr.right != nil {
+			queue = append(queue, curr.right)
+		}
+	}
+}
+
 func main() {
 	preorder := []int{1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1}
 	root := buildTree(preorder)
@@ -59,4 +75,6 @@ func main() {
 	InOrderTraversal(root)
 	fmt.Println()
 	PostOrderTraversal(root)
+	fmt.Println()
+	LevelOrderTraversal(root)
 }
